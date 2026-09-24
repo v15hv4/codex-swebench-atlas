@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && python3 -m pip install --break-system-packages \
       "git+https://github.com/swebenchatlasanon-code/swe-bench-atlas-anon@${ATLAS_COMMIT}"
 
+COPY patch_atlas_java.py /tmp/patch_atlas_java.py
+RUN python3 /tmp/patch_atlas_java.py && rm /tmp/patch_atlas_java.py
+
 WORKDIR /bench
 COPY bench.py /usr/local/bin/atlas-bench
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
